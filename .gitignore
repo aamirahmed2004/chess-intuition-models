@@ -5,3 +5,5 @@
 *.txt
 /images
 *.pth
+/old_notebooks
+*.pkl

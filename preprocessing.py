@@ -100,4 +100,4 @@ def add_representations(batch):
 
 if __name__ == '__main__':
     # print(castle_to_token("KQkq"))
-    print(len(fen_to_piece_maps("7r/1p3k2/p1bPR3/5p2/2B2P1p/8/PP4P1/3K4 b - -")))
+    print(fen_to_token_ids("7r/1p3k2/p1bPR3/5p2/2B2P1p/8/PP4P1/3K4 b - -"))
