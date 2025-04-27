@@ -64,7 +64,7 @@ def fen_to_token_ids(fen):
 
 def fen_to_piece_maps(fen):
     parts = fen.split()
-    board_str, stm = parts[0], parts[1]
+    board_str, stm, castling = parts[0], parts[1], parts[2]
     # 12 channels, with indexes: 0 = white pawn, 1 = white knight, ... 5 = white king, 6 = black pawn, ... 11 = black king
     maps = [[[0.0 for _ in range(8)] for _ in range(8)] for _ in range(12)]
     r = 0
@@ -80,8 +80,13 @@ def fen_to_piece_maps(fen):
         r += 1
     flag = 1.0 if stm == 'w' else 0.0
     flag_map = [[[flag for _ in range(8)] for _ in range(8)]]
-    
-    return maps + flag_map  # final shape: 13x8x8
+
+    castling_planes = []
+    for right in ['K', 'Q', 'k', 'q']:
+        value = 1.0 if right in castling else 0.0
+        castling_planes.append([[value for _ in range(8)] for _ in range(8)])
+
+    return maps + castling_planes + flag_map  # final shape: 17x8x8
 
 def add_representations(batch):
     tokens, maps = [], []
@@ -94,4 +99,5 @@ def add_representations(batch):
     }
 
 if __name__ == '__main__':
-    print(castle_to_token("KQkq"))
+    # print(castle_to_token("KQkq"))
+    print(len(fen_to_piece_maps("7r/1p3k2/p1bPR3/5p2/2B2P1p/8/PP4P1/3K4 b - -")))
